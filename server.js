@@ -10,6 +10,8 @@ require('./config/db_config')
 
 server.use(express.json())
 server.use(cors())
+server.use("/imagenes",express.static("./imagenes"));
+server.use(express.urlencoded({extended:true}))
 
 
 server.use("/artistas",artistasRoutes)

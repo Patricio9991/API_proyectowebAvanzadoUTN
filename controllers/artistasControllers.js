@@ -1,5 +1,6 @@
 const dbConnection=require('../config/db_config')
 
+
 const todosLosArtistas=(req,res)=>{
     dbConnection.query("SELECT * FROM artistas",(err,data)=>{
         if(err){
@@ -28,9 +29,9 @@ const cargarArtista=(req,res)=>{
 
 }
 
-const cargarImagen=(req,res)=>{
+const insertarImagen=(req,res)=>{
     const {nombre}=req.body
-    const imagen=req.file.path
+    
     dbConnection.query("UPDATE artistas SET imagenes=? WHERE nombre=?",[imagen,nombre],(err,data)=>{
         if(err){
             res.send(500).json({"mensaje":"No fue posible"})
@@ -41,4 +42,16 @@ const cargarImagen=(req,res)=>{
     })
 }
 
-module.exports={todosLosArtistas,cargarArtista,cargarImagen}
+const eliminarArtista=(req,res)=>{
+    const {nombre}=req.body
+
+    dbConnection.query("DELETE FROM artistas WHERE nombre=?",[nombre],(err,data)=>{
+        if(err){
+            res.status(500).json({'message':err})
+            console.log(err)
+        }else{
+            res.status(200).send(data)
+        }
+    })
+}
+module.exports={todosLosArtistas,cargarArtista,insertarImagen,eliminarArtista}
