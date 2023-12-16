@@ -5,7 +5,7 @@ const uploadImages=require('../multer/multer')
 
 
 route.get("/todos",todosLosArtistas)
-route.post("/nuevo",cargarArtista)
+route.post("/nuevo",uploadImages.single('file'),cargarArtista)
 route.delete("/eliminar",eliminarArtista)
 
 route.post("/addImage",uploadImages.single("imagen"),insertarImagen)

@@ -14,14 +14,14 @@ const todosLosArtistas=(req,res)=>{
 const cargarArtista=(req,res)=>{
 
     const {nombre,añosActividad,breveBio,generos}=req.body
-    
+    const imagen=req.file
 
     dbConnection.query("INSERT INTO artistas(nombre,añosActividad,breveBio,generos) VALUES (?,?,?,?)",[nombre,añosActividad,breveBio,generos],(err,data)=>{
         if(err){
             res.status(500).json({'message':err})
         }else{
             
-            
+            console.log(imagen)
             res.status(200).send(data)
         }
     })
@@ -50,6 +50,7 @@ const eliminarArtista=(req,res)=>{
             res.status(500).json({'message':err})
             console.log(err)
         }else{
+            console.log(nombre)
             res.status(200).send(data)
         }
     })
