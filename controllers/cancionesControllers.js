@@ -10,4 +10,19 @@ const todasLasCanciones=(req,res)=>{
     })
 }
 
-module.exports={todasLasCanciones}
+const agregarCancion=(req,res)=>{
+    const {titulo, artista,disco}=req.body
+    dbConnection.query("INSERT INTO canciones(titulo, artista,disco) VALUES(?,?,?)",[titulo, artista,disco],(err,data)=>{
+        if(err){
+            res.status(500).json({message:err})
+            console.log(req.body)
+
+        }else{
+            console.log(req.body)
+            res.status(200).send(data)
+        }
+
+    })
+}
+
+module.exports={todasLasCanciones,agregarCancion}
