@@ -11,18 +11,21 @@ const todasLasCanciones=(req,res)=>{
 }
 
 const agregarCancion=(req,res)=>{
-    const {titulo, artista,disco}=req.body
-    dbConnection.query("INSERT INTO canciones(titulo, artista,disco) VALUES(?,?,?)",[titulo, artista,disco],(err,data)=>{
+   const {titulo,artista,disco}=req.body
+
+    dbConnection.query("INSERT INTO canciones(titulo,artista,disco)VALUES(?,?,?)",[titulo,artista,disco],(err,data)=>{
         if(err){
             res.status(500).json({message:err})
-            console.log(req.body)
-
+            console.log(data)
         }else{
             console.log(req.body)
-            res.status(200).send(data)
+            res.send(data)
         }
-
     })
+
 }
+
+
+
 
 module.exports={todasLasCanciones,agregarCancion}
