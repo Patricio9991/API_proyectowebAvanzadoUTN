@@ -13,15 +13,16 @@ const todosLosArtistas=(req,res)=>{
 
 const cargarArtista=(req,res)=>{
 
-    const {nombre,añosActividad,breveBio,generos}=req.body
-    
+    const {nombre,aniosActividad,breveBio,genero}=req.body
+    const file=req.file.path
 
-    dbConnection.query("INSERT INTO artistas(nombre,añosActividad,breveBio,generos) VALUES (?,?,?,?)",[nombre,añosActividad,breveBio,generos],(err,data)=>{
+    dbConnection.query("INSERT INTO artistas(nombre,añosActividad,breveBio,generos,imagenes) VALUES (?,?,?,?,?)",[nombre,aniosActividad,breveBio,genero,file],(err,data)=>{
         if(err){
             res.status(500).json({'message':err})
+            console.log(err)
         }else{
-            
-            
+            console.log(file)
+            console.log(req.file.path)
             res.status(200).send(data)
         }
     })
@@ -29,17 +30,22 @@ const cargarArtista=(req,res)=>{
 
 }
 
-const insertarImagen=(req,res)=>{
-    const {nombre}=req.body
-    
-    dbConnection.query("UPDATE artistas SET imagenes=? WHERE nombre=?",[imagen,nombre],(err,data)=>{
+const editarInfo=(req,res)=>{
+    const numeroMagico=req.params.numeroMagico
+    const {nombre,añosActividad,breveBio,generos}=req.body
+
+    dbConnection.query("UPDATE artistas SET nombre=?,añosActividad=?,breveBio=?,generos=? WHERE id=?",[nombre,añosActividad,breveBio,generos,numeroMagico],(err,data)=>{
         if(err){
-            res.send(500).json({"mensaje":"No fue posible"})
+            res.status(500).json({'mensaje':err})
+            console.log(err)
+
         }else{
-            console.log(req.file)
-            res.send("imagen cargada")
+            res.status(200).send(data)
+            console.log(req.body)
+            console.log(numeroMagico)
         }
     })
+    
 }
 
 const eliminarArtista=(req,res)=>{
@@ -55,4 +61,4 @@ const eliminarArtista=(req,res)=>{
         }
     })
 }
-module.exports={todosLosArtistas,cargarArtista,insertarImagen,eliminarArtista}
+module.exports={todosLosArtistas,cargarArtista,editarInfo,eliminarArtista}
