@@ -2,9 +2,10 @@
 const mysql2=require('mysql2')
 
 const infoDB={
-    host:'localhost',
-    user:'root',
-    database:'musiquita'
+    host:'bylzwi0ryultuomdmkv8-mysql.services.clever-cloud.com',
+    user:'uftyvsud2wjymzt1',
+    database:'bylzwi0ryultuomdmkv8',
+    password:'SZjKhwu2mslflQD1Nny0'
 }
 
 const dbConnection=mysql2.createConnection(infoDB)
